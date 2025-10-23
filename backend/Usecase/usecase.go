@@ -41,3 +41,17 @@ func (u *UserUsecase) Signup(user *domain.User) error {
 func (u *UserUsecase) GetUser(id int64) (*domain.User, error) {
 	return u.UserRepo.GetUserByID(id)
 }
+
+func (u *UserUsecase) Login(email, password string) (*domain.User, error) {
+	user, err := u.UserRepo.GetUserByEmail(email)
+	if err != nil {
+		return nil, err
+	}
+	if user == nil {
+		return nil, errors.New("user not found")
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		return nil, errors.New("invalid credentials")
+	}
+	return user, nil
+}

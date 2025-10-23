@@ -3,6 +3,9 @@ package repository
 import (
 	"database/sql"
 	"dentify/domain"
+	"errors"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type PostgresUserRepo struct {
@@ -32,6 +35,22 @@ func (r *PostgresUserRepo) GetUserByEmail(email string) (*domain.User, error) {
 	}
 	if err != nil {
 		return nil, err
+	}
+	return &user, nil
+}
+
+func (r *PostgresUserRepo) LoginUser(email, password string) (*domain.User, error) {
+	var user domain.User
+	row := r.DB.QueryRow("SELECT id, username, email, password FROM users WHERE email = $1 LIMIT 1", email)
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		return nil, errors.New("invalid credentials")
 	}
 	return &user, nil
 }
