@@ -2,10 +2,12 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 200;
+    height: 600px;
+    max-width: 550px;
     background-color: #fff;
     padding-bottom: 30px;
-
+    margin-top: 10px;
+    border-radius: 20px;
 }
 
 .header {
@@ -39,10 +41,74 @@
 }
 
 .input {
+    display: flex;           /* fix: align icon and input horizontally */
+    align-items: center;
     width: 300px;
-    height: 40px;
+    height: 80px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 0 10px;
     font-size: 16px;
+}
+
+.input img{
+    margin: 0px 30px;
+}
+
+.input input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 19px;
+    background:transparent ;
+    color: #797979;
+}
+
+.ForgotPassword {
+    margin-top: 27px;
+    padding-left: 62px;
+    color: #3c009d;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.ForgotPassword span {
+    color: #3c009d;
+    cursor: pointer;
+}
+
+.SubmitContainer {
+    display: flex;
+    justify-content: center; /* enable centering */
+    margin: 60px auto;
+    gap: 30px;
+}
+
+/* fix: target the actual class used in JSX: "Submit" */
+.SubmitContainer .Submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background-color: #4c00b4;
+    font-size: 19px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color .15s ease-in-out, transform .1s ease-in-out;
+}
+
+.SubmitContainer .Submit:hover {
+    background-color: #3a0090;
+}
+
+
+.SubmitContainer .gray {
+    background: #EAEAEA;
+    color: #676767;
+    cursor: not-allowed;
+    pointer-events: none;
 }
